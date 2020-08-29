@@ -1,6 +1,5 @@
 import 'package:flixxer/frontend/helpers/getStars.dart';
 import 'package:flixxer/index.dart';
-import 'dart:ui' as ui;
 
 import 'package:google_fonts/google_fonts.dart';
 
@@ -22,9 +21,7 @@ class Movie extends StatelessWidget {
     return Scaffold(
       body: Row(
         children: <Widget>[
-          Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
+          Column(children: <Widget>[
               SizedBox(height: SizeConfig.screenHeight*0.06),
               Container(
                 width: SizeConfig.screenWidth*0.30,
@@ -43,19 +40,21 @@ class Movie extends StatelessWidget {
           ),
           SizedBox(width: SizeConfig.screenWidth*0.05,),
           Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              SizedBox(height: SizeConfig.screenHeight*0.06),
+              SizedBox(height: SizeConfig.screenHeight*0.1),
               Text(
                 "$movieName",
                 style: GoogleFonts.montserrat(
                     fontWeight: FontWeight.bold,
+
                     fontSize: 18),
               ),
               SizedBox(height: SizeConfig.screenHeight*0.01,),
               Text(
                 "$movieType | $movieLong min",
                 style: GoogleFonts.montserrat(
-                  fontWeight: FontWeight.w600,
+                  fontWeight: FontWeight.w400,
                   color: Colors.grey,
                   fontSize: 11,
                 ),
@@ -64,12 +63,13 @@ class Movie extends StatelessWidget {
               Text(
                 "$minAge",
                 style: GoogleFonts.montserrat(
-                  fontWeight: FontWeight.w600,
+                  fontWeight: FontWeight.w400,
                   color: Colors.grey,
                   fontSize: 11,
                 ),
               ),
-            getStars(this.rate)
+              SizedBox(height: SizeConfig.screenHeight*0.005,),
+              getStars(this.rate),
             ],
           )
         ],

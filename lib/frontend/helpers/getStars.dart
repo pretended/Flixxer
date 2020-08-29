@@ -1,3 +1,5 @@
+import 'package:google_fonts/google_fonts.dart';
+
 import '../../index.dart';
 
 class getStars extends StatelessWidget {
@@ -6,12 +8,8 @@ class getStars extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Flexible(
-      child: Container(
-        height: SizeConfig.screenHeight * 0.05,
-        width: SizeConfig.screenWidth * 0.31,
-        child: Row(
-          children: listStars(this.rate),
-        )
+      child: Row(
+        children: listStars(this.rate),
       ),
     );
   }
@@ -30,15 +28,24 @@ class getStars extends StatelessWidget {
     else return -1;
   }
   Icon fullStar () {
-    return Icon(Icons.star, color: Colors.yellow[700]);
+    return Icon(Icons.star, color: Colors.yellow[700] ,size: SizeConfig.screenWidth * 0.05,);
   }
   Icon emptyStar () {
-    return Icon(Icons.star_border, color: Colors.yellow[700] );
+    return Icon(Icons.star_border, color: Colors.yellow[700] ,size: SizeConfig.screenWidth * 0.05, );
   }
   Icon halfStar () {
-        return Icon(Icons.star_half, color: Colors.yellow[700]);
+        return Icon(Icons.star_half, color: Colors.yellow[700], size: SizeConfig.screenWidth * 0.05,);
   }
   List listStars(double rate) {
+    SizedBox sizedBoxWidth = new SizedBox(width: SizeConfig.screenWidth*0.02);
+    Text rateText = Text(
+      "$rate",
+      style: GoogleFonts.montserrat(
+        fontWeight: FontWeight.w400,
+        color: Colors.grey,
+        fontSize: 11,
+      ),
+    );
     final children = <Widget>[];
     double n = numberOfStars(rate);
     double fractionalPart = n % 1;
@@ -46,17 +53,21 @@ class getStars extends StatelessWidget {
     for (var i = 0; i < integralPart; i++) {
       children.add(fullStar());
     }
-    if (children.length == 5)
+    if (children.length == 5) {
+      children.add(sizedBoxWidth);
+      children.add(rateText);
       return children;
+    }
     else {
-      if (fractionalPart > 0.4) {
+      if (fractionalPart > 0) {
         children.add(halfStar());
       } else
         children.add(emptyStar());
       while (children.length < 5) {
-        print('XDDD');
         children.add(emptyStar());
       }
+      children.add(sizedBoxWidth);
+      children.add(rateText);
       return children;
     }
   }

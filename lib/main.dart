@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: Movie('Flutter', 'https://picsum.photos/250?image=9','Animation', '3+', 120, 9.4)
+      home: Movie('Frozen II', 'https://images-na.ssl-images-amazon.com/images/I/71TE1Y196-L._AC_SY741_.jpg','Animation', '3+', 120, 5.6)
     );
   }
 }
