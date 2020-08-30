@@ -1,26 +1,17 @@
-import 'package:flixxer/frontend/helpers/getStars.dart';
 import 'package:flixxer/index.dart';
-
-import 'package:google_fonts/google_fonts.dart';
-
+import 'package:http/http.dart' as http;
 class MovieWidget extends StatelessWidget {
-  final int movieId;
-  var minAge;
-  var movieType;
-  int movieLong;
-  double rate;
-  final movieName;
-  // ignore: non_constant_identifier_names
-  var image_url;
+  Movie flix;
+  MovieWidget(Movie fl) {
+    flix = fl;
+  }
 
-  MovieWidget(this.movieName, this.image_url, this.movieType, this.minAge, this.movieLong, this.rate, {this.movieId});
   @override
   Widget build(BuildContext context) {
-
     SizeConfig.init(context);
-    return Scaffold(
-      body: Row(
-        children: <Widget>[
+    return
+      Row(
+         children: <Widget>[
           Column(children: <Widget>[
               SizedBox(height: SizeConfig.screenHeight*0.06),
               Container(
@@ -30,7 +21,7 @@ class MovieWidget extends StatelessWidget {
                   image: DecorationImage(
                     fit: BoxFit.fill,
                     image: NetworkImage(
-                      '$image_url',
+                      '$flix.image_url',
                     ),
                   ),
                   borderRadius: BorderRadius.circular(SizeConfig.screenWidth*0.05)
@@ -39,41 +30,43 @@ class MovieWidget extends StatelessWidget {
             ],
           ),
           SizedBox(width: SizeConfig.screenWidth*0.05,),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              SizedBox(height: SizeConfig.screenHeight*0.1),
-              Text(
-                "$movieName",
-                style: GoogleFonts.montserrat(
-                    fontWeight: FontWeight.bold,
+          Flexible(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                SizedBox(height: SizeConfig.screenHeight*0.1),
+                Text(
+                  "$flix.title",
+                  style: GoogleFonts.montserrat(
+                      fontWeight: FontWeight.bold,
 
-                    fontSize: 18),
-              ),
-              SizedBox(height: SizeConfig.screenHeight*0.01,),
-              Text(
-                "$movieType | $movieLong min",
-                style: GoogleFonts.montserrat(
-                  fontWeight: FontWeight.w400,
-                  color: Colors.grey,
-                  fontSize: 11,
+                      fontSize: 18),
                 ),
-              ),
-              SizedBox(height: SizeConfig.screenHeight*0.01,),
-              Text(
-                "$minAge",
-                style: GoogleFonts.montserrat(
-                  fontWeight: FontWeight.w400,
-                  color: Colors.grey,
-                  fontSize: 11,
+                SizedBox(height: SizeConfig.screenHeight*0.01,),
+                Text(
+                  "x",
+                  style: GoogleFonts.montserrat(
+                    fontWeight: FontWeight.w400,
+                    color: Colors.grey,
+                    fontSize: 11,
+                  ),
                 ),
-              ),
-              SizedBox(height: SizeConfig.screenHeight*0.005,),
-              getStars(this.rate),
-            ],
+                SizedBox(height: SizeConfig.screenHeight*0.01,),
+                Text(
+                  "x",
+                  style: GoogleFonts.montserrat(
+                    fontWeight: FontWeight.w400,
+                    color: Colors.grey,
+                    fontSize: 11,
+                  ),
+                ),
+                SizedBox(height: SizeConfig.screenHeight*0.005,),
+                getStars(9),
+              ],
+            ),
           )
         ],
-      )
     );
   }
 }

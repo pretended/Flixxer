@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class Movie {
+
   bool adult;
   int budget;
   var genres; //This will be a list of genres
@@ -13,7 +14,8 @@ class Movie {
   String title;
   double vote_average;
   int vote_count;
-
+  String image_url;
+  static String _imageApiUrl = 'https://image.tmdb.org/t/p/w300_and_h450_bestv2/';
   Movie(
       this.adult,
       this.budget,
@@ -24,7 +26,9 @@ class Movie {
       this.release_date,
       this.title,
       this.vote_average,
-      this.vote_count);
+      this.vote_count,
+      this.image_url
+      );
 
   Movie.fromJson(Map<String, dynamic> json)
       : adult = json['adult'],
@@ -36,20 +40,8 @@ class Movie {
         release_date = json['release_date'],
         title = json['title'],
         vote_average = json['vote_average'].toDouble(),
-        vote_count = json['vote_count'];
-}
-
-void main() {
-  http
-      .get(
-          "https://api.themoviedb.org/3/discover/movie?api_key=b7a228798b28e5a67b5c2d47647d108a")
-      .then((resp) {
-    List<dynamic> results = json.decode(resp.body)['results'];
-    results.forEach((element) {
-      Movie m = Movie.fromJson(element);
-      print(m.genres);
-    });
-  });
+        vote_count = json['vote_count'],
+        image_url = _imageApiUrl + json['poster_path'].toString().substring(1);
 }
 
 class Genre {
