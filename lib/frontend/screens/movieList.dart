@@ -13,13 +13,12 @@ class _movieListState extends State<movieList> {
   Widget build(BuildContext context) {
     return Scaffold(
             appBar: AppBar(title: Text('ListViexw')),
-            body: Center(
-              child: ListView.builder(
-                    itemCount: children.length,
-                    itemBuilder: (BuildContext context, int position) {
-                      return children[position];
-              },
-              ),
+            body: ListView.builder(
+                  itemCount: children.length,
+                  itemBuilder: (BuildContext context, int position) {
+                    print('x');
+                    return children[position];
+            },
             )
                   );
   }
@@ -35,7 +34,7 @@ class _movieListState extends State<movieList> {
       results.forEach((element) {
         Movie m = Movie.fromJson(element);
         movieObjectList.add(MovieWidget(m));
-        print(m);
+        print(m.image_url);
       });
     });
     return movieObjectList;
