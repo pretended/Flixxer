@@ -3,7 +3,7 @@ import 'package:flixxer/index.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 
-class Movie extends StatelessWidget {
+class MovieWidget extends StatelessWidget {
   final int movieId;
   var minAge;
   var movieType;
@@ -13,7 +13,7 @@ class Movie extends StatelessWidget {
   // ignore: non_constant_identifier_names
   var image_url;
 
-  Movie(this.movieName, this.image_url, this.movieType, this.minAge, this.movieLong, this.rate, {this.movieId});
+  MovieWidget(this.movieName, this.image_url, this.movieType, this.minAge, this.movieLong, this.rate, {this.movieId});
   @override
   Widget build(BuildContext context) {
 

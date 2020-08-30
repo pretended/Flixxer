@@ -1,4 +1,4 @@
-import 'package:flixxer/frontend/helpers/Movie.dart';
+import 'package:flixxer/frontend/helpers/MovieWidget.dart';
 import 'package:flixxer/frontend/screens/movieList.dart';
 import 'package:flutter/material.dart';
 
@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: Movie('Frozen II', 'https://images-na.ssl-images-amazon.com/images/I/71TE1Y196-L._AC_SY741_.jpg','Animation', '3+', 120, 5.6)
+      home: MovieWidget('Frozen II', 'https://images-na.ssl-images-amazon.com/images/I/71TE1Y196-L._AC_SY741_.jpg','Animation', '3+', 120, 5.6)
     );
   }
 }
