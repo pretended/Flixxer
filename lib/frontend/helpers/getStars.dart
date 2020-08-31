@@ -4,13 +4,13 @@ import '../../index.dart';
 
 class getStars extends StatelessWidget {
   double rate;
-  getStars(this.rate);
+  bool center;
+  getStars(this.rate, this.center);
   @override
   Widget build(BuildContext context) {
-    return Flexible(
-      child: Row(
-        children: listStars(this.rate),
-      ),
+    return Row(
+      mainAxisAlignment: center ? MainAxisAlignment.center : MainAxisAlignment.start,
+      children: listStars(this.rate),
     );
   }
   double numberOfStars(double rate) {

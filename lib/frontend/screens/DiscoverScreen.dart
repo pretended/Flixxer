@@ -1,7 +1,10 @@
 import 'package:flixxer/frontend/helpers/MovieWidget.dart';
+import 'package:flixxer/frontend/screens/MovieDetalleScreen.dart';
+import 'package:flixxer/frontend/screens/OverviewScreen.dart';
 
 import 'package:http/http.dart' as http;
 import 'package:flixxer/index.dart';
+
 
 class DiscoverScreen extends StatefulWidget {
   @override
@@ -62,6 +65,7 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
     );
   }
   ListView buildDiscoverList () {
+    Movie tapped;
     return ListView.builder(
       itemCount: children.length,
       itemBuilder: (BuildContext context, int position) {
@@ -73,7 +77,10 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
               Icon(Icons.keyboard_arrow_right, color:Colors.grey, size: SizeConfig.screenHeight * 0.05,),
             ],
           ),
-          onTap: () {},
+          onTap: () {
+              tapped = children[position].getMovie();
+              Navigator.push(context, MaterialPageRoute(builder: (context) => OverviewScreen(tapped)));
+          },
         );
       },
     );

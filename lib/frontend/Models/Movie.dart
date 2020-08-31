@@ -20,7 +20,7 @@ class Movie {
   List<Person> cast = new List();
   List<Person> crew = new List();
   static String _imageApiUrl =
-      'https://image.tmdb.org/t/p/w300_and_h450_bestv2/';
+      'https://image.tmdb.org/t/p/w500/';
 
   Movie(
       {this.adult,

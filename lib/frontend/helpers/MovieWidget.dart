@@ -6,7 +6,9 @@ class MovieWidget extends StatelessWidget {
   MovieWidget(Movie fl) {
     flix = fl;
   }
-
+  Movie getMovie() {
+    return flix;
+  }
   @override
   Widget build(BuildContext context) {
     SizeConfig.init(context);
@@ -41,7 +43,6 @@ class MovieWidget extends StatelessWidget {
                 children: <Widget>[
                   Text(
                     flix.title,
-                    overflow: TextOverflow.visible,
                     style: GoogleFonts.montserrat(
                         fontWeight: FontWeight.bold,
                         fontSize: SizeConfig.screenWidth *0.038),
@@ -65,7 +66,7 @@ class MovieWidget extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: SizeConfig.screenHeight*0.005,),
-                  getStars(flix.vote_average),
+                  getStars(flix.vote_average,false),
                 ],
               ),
             ),
