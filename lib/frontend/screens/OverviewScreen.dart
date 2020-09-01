@@ -21,13 +21,17 @@ class _OverviewScreenState extends State<OverviewScreen> {
       body:
           Center(
               child: CustomScrollView(
-
                 slivers: <Widget>[
                   SliverAppBar(
-                    title: Text(widget.movie.title),
+                    title: Text(widget.movie.title, style: TextStyle(
+                        color: Colors.white,
+                        fontSize:SizeConfig.screenHeight * 0.035 ),),
                     backgroundColor: Colors.transparent,
                     expandedHeight: 500,
                     centerTitle: true,
+                    leading: IconButton(
+                      icon: Icon(Icons.keyboard_backspace,color: Colors.white,), onPressed: () {Navigator.pop(context);  },
+                    ),
                     flexibleSpace: FlexibleSpaceBar(
                       background: blurImage(widget.movie.image_url),
                     ),
@@ -43,12 +47,9 @@ class _OverviewScreenState extends State<OverviewScreen> {
                               favoriteIcon = Icons.favorite_border;
                             }
                           });
-
                         },
-
                       )
                     ],
-                    
                   ),
                   SliverList(
                     delegate: SliverChildListDelegate(
@@ -88,7 +89,7 @@ Widget movieDetails(Movie movie){
             style:infoStyle),
         SizedBox(height: SizeConfig.screenHeight * 0.05,),
         Padding(
-          padding: EdgeInsets.only(right: SizeConfig.screenWidth * 0.08, left: SizeConfig.screenWidth * 0.13),
+          padding: EdgeInsets.only(right: SizeConfig.screenWidth * 0.08, left: SizeConfig.screenWidth * 0.08),
           child: Text(
               movie.title,
               style: TextStyle(

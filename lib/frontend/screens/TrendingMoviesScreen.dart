@@ -1,21 +1,26 @@
+import 'package:flixxer/frontend/Models/API.dart';
 import 'package:flixxer/frontend/helpers/MovieWidget.dart';
 import 'package:flixxer/frontend/screens/OverviewScreen.dart';
-import 'package:flixxer/frontend/screens/TrendingMoviesScreen.dart';
+import 'package:flixxer/frontend/tests/test.dart';
 
+import '../../index.dart';
 import 'package:http/http.dart' as http;
-import 'package:flixxer/index.dart';
+class TrendingMoviesScreen extends StatefulWidget {
+  List children = <Widget>[];
 
-
-class DiscoverScreen extends StatefulWidget {
   @override
-  _DiscoverScreenState createState() => _DiscoverScreenState();
+  _TrendingMoviesScreenState createState() => _TrendingMoviesScreenState();
 }
 
-class _DiscoverScreenState extends State<DiscoverScreen> {
-  List children = listMovies();
+class _TrendingMoviesScreenState extends State <TrendingMoviesScreen> {
+  List children = <Widget>[];
+  _TrendingMoviesScreenState() {
+    getTrendingIds().then((val) => setState(() {
+      children = val;
+    }));
+  }
   @override
   Widget build(BuildContext context) {
-    SizeConfig.init(context);
     return Scaffold(
         body: Column(
           children: <Widget> [
@@ -29,8 +34,8 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
                   Text(
                     "Discover",
                     style: TextStyle(
-                      fontWeight: FontWeight.w900,
-                      fontSize: SizeConfig.screenWidth * 0.06
+                        fontWeight: FontWeight.w900,
+                        fontSize: SizeConfig.screenWidth * 0.06
                     ),
                   ),
                   IconButton(
@@ -55,30 +60,35 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
                   ),
                   Padding(
                     padding: EdgeInsets.only(right: SizeConfig.screenWidth * 0.05),
-                    child: InkWell(
-                      onTap: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => TrendingMoviesScreen()));
-                      },
-                      child: Text("See trending",
-                      style: TextStyle(
-                        fontWeight: FontWeight.w800,
-                        color: Colors.redAccent,
-                        fontSize:  SizeConfig.screenWidth * 0.035
-                      )),
-                    ),
+                    child: Text("See trending",
+                        style: TextStyle(
+                            fontWeight: FontWeight.w800,
+                            color: Colors.redAccent,
+                            fontSize:  SizeConfig.screenWidth * 0.035
+                        )),
                   )
                 ],
               ),
             ),
             SizedBox(height: SizeConfig.screenHeight * 0.01,),
             Expanded(
-              child: buildDiscoverList()
+                child: buildTrendingList()
             )
           ],
         )
     );
   }
-  ListView buildDiscoverList () {
+  Future<List> listTrendingMovies() async {
+    final movieObjectList = <Widget>[];
+    List<int> trendingMoviesIds = await getTrendingIds();
+    trendingMoviesIds.forEach((element) async {
+      Movie m = await getMovieById(element);
+      movieObjectList.add(MovieWidget(m));
+      print(m.image_url);
+    });
+    return movieObjectList;
+  }
+  ListView buildTrendingList () {
     Movie tapped;
     return ListView.builder(
       itemCount: children.length,
@@ -92,26 +102,29 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
             ],
           ),
           onTap: () {
-              tapped = children[position].getMovie();
-              Navigator.push(context, MaterialPageRoute(builder: (context) => OverviewScreen(tapped)));
+            tapped = children[position].getMovie();
+            Navigator.push(context, MaterialPageRoute(builder: (context) => OverviewScreen(tapped)));
           },
         );
       },
     );
   }
-  static List listMovies() {
-    final movieObjectList = <Widget>[];
-    var _apiUrl = "https://api.themoviedb.org/3/discover/movie?api_key=b7a228798b28e5a67b5c2d47647d108a";
-    http
-        .get(
-        _apiUrl)
-        .then((resp) {
-      List<dynamic> results = json.decode(resp.body)['results'];
-      results.forEach((element) {
-        Movie m = Movie.fromJson(element);
-        movieObjectList.add(MovieWidget(m));
-      });
+
+  Future<List<int>> getTrendingIds()  async {
+    List<int> moviesIds = new List<int>();
+    var _trendingApiUrl = "https://api.themoviedb.org/3/trending/all/day?api_key=${API.API_KEY}";
+    http.Response resp = await http.get(_trendingApiUrl);
+    List<dynamic> response = jsonDecode(resp.body)['results'];
+    response.forEach((element) {
+      MovieDetailed movieDetailed = MovieDetailed.fromJson(element);
+      moviesIds.add(movieDetailed.id);
     });
-    return movieObjectList;
+    return moviesIds;
+  }
+  Future<Movie> getMovieById(int id) async {
+    var _getDetailsApiUrl = "https://api.themoviedb.org/3/movie/${id.toString()}?api_key=${API.API_KEY}";
+    http.Response response = await http.get(_getDetailsApiUrl);
+    Map<String,dynamic> movie =  jsonDecode(response.body);
+    return Movie.fromJson(movie);
   }
 }
